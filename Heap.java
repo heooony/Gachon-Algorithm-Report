@@ -30,29 +30,60 @@ public class Heap {
         }
     }
 
+    /**
+     * 힙을 구성한다.
+     * @param numbers 정렬 타겟 배열
+     * @param n 배열의 길이
+     */
     public static void buildHeap(int[] numbers, int n) {
+        /**
+         * 전체 길이를 2로 나누었을 때 자식이 있는 노드의 가장 마지막에 접근할 수 있다.
+         * 루트 노드까지 실행한다.
+         */
         for (int i = n/2-1; i >= 0; i--) {
             heapify(numbers, i, n);
         }
     }
 
+    /**
+     * 힙을 만족하는지에 대해 판단한다.
+     * @param numbers 정렬 타겟 배열
+     * @param k 자식이 있는 현재 노드의 인덱스
+     * @param n 전체 길이
+     */
     public static void heapify(int[] numbers, int k, int n) {
-        int smaller;
-        int left = 2 * k + 1;
-        int right = 2 * k + 2;
 
+        int smaller; // 가장 작은 수의 인덱스
+        int left = 2 * k + 1; // 왼쪽 자식 노드
+        int right = 2 * k + 2; // 오른쪽 자식 노드
+
+        /**
+         * 오른쪽 자식 노드가 있는 경우
+         */
         if (right < n) {
+
+            /**
+             * 값 비교를 통해 더 작은 수를 찾는다.
+             */
             if (numbers[left] < numbers[right]) {
                 smaller = left;
             } else {
                 smaller = right;
             }
+        
+        /**
+         * 왼쪽 자식 노드만 있는 경우
+         */
         } else if (left <= n) {
             smaller = left;
         } else {
             return;
         }
 
+        /**
+         * 현재 노드의 값 보다 더 작은 값이 존재한다면
+         * 순서를 바꾸고, 다시 힙을 만족하는지 그 자식으로부터 시작한다.
+         */
         if (numbers[smaller] < numbers[k]) {
             swapByIndex(numbers, smaller, k);
             heapify(numbers, smaller, n);
